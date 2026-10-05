@@ -1,0 +1,29 @@
+# ---Base model configuration---
+FROM qwen3-coder:30b-a3b-q4_K_M
+
+# --- HARDWARE ROUTING ---
+# Fully offload the entire structure into VRAM (Ollama auto-maps layers natively)
+#PARAMETER num_gpu 99
+
+# --- KV CACHE COMPRESSION (CRITICAL FOR 24GB VRAM) ---
+# Compresses the dual parallel stream cache to 8-bit, saving ~5GB of VRAM
+#PARAMETER kv_cache_type q8_0
+
+# --- CONTEXT SIZE (FOR NUM_PARALLEL=2) ---
+# Sets a 16K slot limit. Safe for OLLAMA_NUM_PARALLEL=2 on a 24GB card
+#PARAMETER num_ctx 16384
+PARAMETER num_ctx 262144
+
+# Allows long, exhaustive code block generations up to 4K tokens
+PARAMETER num_predict 4096
+
+# --- SAMPLING PARAMETERS (OFFICIAL QWEN3 MOE BEST PRACTICES) ---
+PARAMETER temperature 0.7
+PARAMETER top_p 0.8
+PARAMETER top_k 20
+PARAMETER repeat_penalty 1.05
+
+# --- ASSISTANT BEHAVIOR ---
+SYSTEM """You are an elite software architect and expert agentic software developer. 
+Analyze full requests, analyze entire project frames, prioritize structural safety, and provide robust, syntactically clean solutions. 
+Ensure code is safe and optimized."""

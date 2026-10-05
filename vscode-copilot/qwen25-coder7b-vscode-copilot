@@ -1,0 +1,22 @@
+# ---Base model configuration---
+FROM qwen2.5-coder:7b-instruct-q4_K_M
+
+# --- HARDWARE ROUTING ---
+# Pin entirely to Strix Halo CPU/RAM to protect discrete GPU VRAM
+PARAMETER num_gpu 0
+
+# --- PERFORMANCE & TEXT SAMPLING ---
+# Low temperature enforces precise, predictable code syntax logic
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+# Keeps context minimal so typing completions load instantly in milliseconds
+PARAMETER num_ctx 4096
+# Restricts completion size so it stops at the immediate logical block
+PARAMETER num_predict 256
+
+# --- ASSISTANT BEHAVIOR ---
+SYSTEM """You are a highly efficient and precise inline code-completion engineer. 
+Provide code blocks immediately without conversational fluff or introductory explanations."""
+
+# SYSTEM """You are a precise, background inline code auto-completion tool. 
+# Provide code snippets immediately. Do not explain things or use markdown chat text outside code blocks."""
