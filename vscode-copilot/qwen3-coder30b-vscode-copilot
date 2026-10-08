@@ -4,6 +4,8 @@ FROM qwen3-coder:30b-a3b-q4_K_M
 # --- HARDWARE ROUTING ---
 # Fully offload the entire structure into VRAM (Ollama auto-maps layers natively)
 #PARAMETER num_gpu 99
+# Pin entirely to Strix Halo CPU/RAM to protect discrete GPU VRAM
+PARAMETER num_gpu 0
 
 # --- KV CACHE COMPRESSION (CRITICAL FOR 24GB VRAM) ---
 # Compresses the dual parallel stream cache to 8-bit, saving ~5GB of VRAM
