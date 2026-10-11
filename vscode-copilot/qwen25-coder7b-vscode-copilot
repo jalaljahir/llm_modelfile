@@ -3,7 +3,7 @@ FROM qwen2.5-coder:7b-instruct-q4_K_M
 
 # --- HARDWARE ROUTING ---
 # Pin entirely to Strix Halo CPU/RAM to protect discrete GPU VRAM
-PARAMETER num_gpu 0
+#PARAMETER num_gpu 0
 
 # --- PERFORMANCE & TEXT SAMPLING ---
 # Low temperature enforces precise, predictable code syntax logic
